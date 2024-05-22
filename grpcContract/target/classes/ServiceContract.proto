@@ -1,0 +1,51 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+option java_multiple_files = true;
+option java_package = "cnv2024tf";
+package cnv2024tf;
+service Cnv2024tf {
+  // subscribe a topic
+  // rpc topicSubscribe(SubscribeUnSubscribe) returns (stream ForumMessage);
+  // unsubscribe a topic
+  // rpc topicUnSubscribe(SubscribeUnSubscribe) returns (google.protobuf.Empty);
+  // get all topics in server
+  // rpc getAllTopics(google.protobuf.Empty) returns (ExistingTopics);
+  // send a message to a topic
+  // rpc publishMessage(ForumMessage) returns (google.protobuf.Empty);
+
+  rpc submitImage(ImageRequest) returns (ImageResponse);
+  rpc getImageLabels(LabelRequest) returns (LabelResponse);
+}
+
+message ImageRequest {
+  string image_name = 1;
+  bytes image_data = 2;
+}
+
+message ImageResponse {
+  string id = 1;
+}
+
+message LabelRequest {
+  string id = 1;
+}
+
+message LabelResponse {
+  repeated string labels = 1;
+  repeated string translations = 2;
+  string processed_date = 3;
+}
+
+message SubscribeUnSubscribe {
+  string usrName = 1;
+  string topicName = 2;
+}
+message ExistingTopics {
+  // list of topic names
+  repeated string topicName = 1;
+}
+message ForumMessage {
+  string fromUser = 1;
+  string topicName = 2;
+  string txtMsg = 3;
+}
